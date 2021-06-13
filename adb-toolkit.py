@@ -3,7 +3,7 @@ from os import system, name, environ, popen
 from time import sleep
 import readline, sys, getopt, subprocess
 
-version = f'0.1-{Fore.RED}beta{Style.RESET_ALL}'
+version = f'0.2-{Fore.RED}beta{Style.RESET_ALL}'
 verbose = False
 banner = f'''{Fore.RED}
            _ _           _              _ _    _ _  
