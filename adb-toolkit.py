@@ -124,7 +124,7 @@ def HandleTargets():
 
   def Find():
     print(f'  Credit: {Fore.RED}@gudishvibes:fairydust.space{Style.RESET_ALL}')
-    path = ask(f'Path to save the targets? {Fore.RED}(Default {environ["HOME"]}){Style.RESET_ALL}') or f'{environ["HOME"]}'
+    path = ask(f'Path to save the file? {Fore.RED}(Default {environ["HOME"]}){Style.RESET_ALL}') or f'{environ["HOME"]}'
     limit = ask(f'Limit? {Fore.RED}(Default 5000){Style.RESET_ALL}') or '5000'
     name = ask(f'File name? {Fore.RED}(Default "android.json.gz"){Style.RESET_ALL}') or 'android.json.gz'
     filters = ask(f'Extra shodan options? {Fore.RED}(ADB is already included){Style.RESET_ALL}')
