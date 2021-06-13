@@ -75,7 +75,7 @@ class Shell:
       if not self.menu.prev == None:
         self.loadmenu(self.menu.prev)
     else:
-      if RX.isdigit() and int(RX) > 0 and int(RX) <= len(self.menu.opts): # Check if it is an option
+      if RX.isdigit() and int(RX) > 0 and int(RX) <= len(self.menu.opts):
         clear()
         self.menu.opts[int(RX) - 1].exec()
       elif not len(RX) == 0:
@@ -94,26 +94,9 @@ class Shell:
         return
     check(self.menu, self.menu.name)
   def loadmenu(self, new):
-    
-    #print('\nBefore\n')
-    #print('self.menu.name: ' + str(self.menu.name))
-    #print('self.menu.prev: ' + str(self.menu.prev))
-    #if not self.menu.prev == None:
-    #  print('self.menu.prev.name: ' + str(self.menu.prev.name))
-
-    if not self.menu.prev == new: # Prev only goes backwards.
+    if not self.menu.prev == new:
       new.prev = self.menu
-     
     self.menu = new
-
-    #print('\nAfter\n')
-    #print('self.menu.name: ' + str(self.menu.name))
-    #print('self.menu.prev: ' + str(self.menu.prev))
-
-    #if not self.menu.prev == None:
-    #  print('self.menu.prev.name: ' + str(self.menu.prev.name))
-    #print('\n')
-
     self.genpath()
     self.init()
 
