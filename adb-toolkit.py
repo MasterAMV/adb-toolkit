@@ -23,6 +23,8 @@ help = f'''
     p: print (Prints the options)
     b: banner (Shows the banner and options)
     h: help
+    r: return (Go back to the previous menu)
+    e: exit
 '''
 opts, args = getopt.getopt(sys.argv[1:], 'v', ['verbose'])
 
@@ -74,6 +76,8 @@ class Shell:
     elif RX in(['r', 'return']):
       if not self.menu.prev == None:
         self.loadmenu(self.menu.prev)
+    elif RX in(['e', 'exit']):
+      sys.exit(f'  \n{Fore.RED}Goodbye!{Style.RESET_ALL}')
     else:
       if RX.isdigit() and int(RX) > 0 and int(RX) <= len(self.menu.opts):
         clear()
