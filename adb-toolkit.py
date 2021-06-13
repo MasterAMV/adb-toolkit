@@ -139,17 +139,19 @@ def HandleTargets():
     run(f'shodan download --limit {limit} {path}{name} "Android Debug Bridge" {filters}')
   def Conn():
     print(f'  Credit: {Fore.RED}@gudishvibes:fairydust.space{Style.RESET_ALL}')
-    ips = ask(f'Path to the saved targets? {Fore.RED}(Leave empty to manually enter a target){Style.RESET_ALL}')
+    ips = ask(f'Path to the saved file? {Fore.RED}(Leave empty to manually enter a target){Style.RESET_ALL}')
 
     if ips == '':
         ips = ask('IP Address?')
         if len(ips) > 0:
           run(f'adb connect {ips}')
-    else:
+    elif not ips[-1] == slash:
       run(f'for addr in $(shodan parse --fields ip_str,port --separator : {ips}); do adb connect $addr; done')
       dis = ask(f'Would you like to disconnect from all of those devices? {Fore.RED}(Y/n){Style.RESET_ALL}').lower()
       if dis == 'y':
         run('adb disconnect')
+    else:
+      err('Invalid Path.', f"'{slash} cannot be the last character of a valid file path.")
   def Disc():
     all = ask(f'Do you want to disconnect from all devices? {Fore.RED}(Y/n){Style.RESET_ALL}').lower()
     if all == 'y':
