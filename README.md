@@ -8,4 +8,4 @@ Dependencies
     - shodan
 
 This README is temporary.
-Latest version is 0.1-beta
+Latest version is 0.2-beta
