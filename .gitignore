@@ -1,3 +1,4 @@
 build/
 dist/
 adb-toolkit.spec
+android.json.gz
