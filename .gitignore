@@ -1,5 +1,5 @@
 build/
 dist/
-.adb-toolkit/config.json
+config.json
 adb-toolkit.spec
 android.json.gz

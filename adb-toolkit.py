@@ -188,27 +188,26 @@ def Tools():
 
 print('\n {}*{} Checking for config file.'.format(Fore.RED, Style.RESET_ALL))
 
-global config
-
 try:
-  config = json.load(open('.adb-toolkit/config.json', 'r'))
+  config = json.load(open('config.json', 'r'))
 except FileNotFoundError:
   print(' {}|{}\n {}| Not found.{}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL))
   try:
-    config = open('.adb-toolkit/config.json', 'w')
+    config = open('config.json', 'w')
   except:
-    err('Failed to create config file. (adb-toolkit/config.json', False)
-    exit()
+    err('Failed to create config file. (config.json)', False)
+    exit('Goodbye!')
   else:
     config.write(default_config)
     print(' {}|{} Generated.{}\n {}|{}'.format(Fore.RED, Fore.GREEN, Style.RESET_ALL, Fore.RED, Style.RESET_ALL))
-  finally:
-    config.close()
+
 except json.decoder.JSONDecodeError:
-  err('The decoding of the config file failed. (Try deleting .adb-toolkit/config.json)', 'json.decoder.JSONDecodeError')
+  err('The decoding of the config file failed. (Try deleting config.json)', 'json.decoder.JSONDecodeError')
   exit()
 else:
   print(' {}|{} Exists.'.format(Fore.RED, Style.RESET_ALL))
+
+config.close()
 
 print(' {}* {}Dependency check.'.format(Fore.RED, Style.RESET_ALL))
 print(' {}|'.format(Fore.RED))
