@@ -14,4 +14,4 @@ Dependencies
     - shodan
 
 This README is subject to change.
-Latest version is 0.3-beta
+Latest version is 0.4-beta
