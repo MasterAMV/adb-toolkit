@@ -5,8 +5,8 @@ from os import system, name, environ, devnull
 from time import sleep
 import readline, sys, getopt, subprocess
 
-version = f"0.3-{Fore.RED}beta{Style.RESET_ALL}"
-dependencies = ['shodan', 'adb']
+version = f"0.4-{Fore.RED}beta{Style.RESET_ALL}"
+dependencies = ['shodan', 'adb', 'scrcpy']
 verbose = False
 banner = rf'''{Fore.RED}
            _ _           _              _ _    _ _  
