@@ -3,9 +3,10 @@
 from colorama import Fore, Back, Style
 from os import system, name, environ, devnull
 from time import sleep
-import readline, sys, getopt, subprocess
+import readline, sys, getopt, subprocess, json
 
-version = f"0.4-{Fore.RED}beta{Style.RESET_ALL}"
+version = f'0.4-{Fore.RED}beta{Style.RESET_ALL}'
+
 dependencies = ['shodan', 'adb', 'scrcpy']
 verbose = False
 banner = rf'''{Fore.RED}
@@ -18,6 +19,8 @@ banner = rf'''{Fore.RED}
  adb-toolkit: {Style.RESET_ALL}{version}{Fore.RED}
  author: {Style.RESET_ALL}MasterAMV{Fore.RED} <AlphaProtonmail@protonmail.com>{Style.RESET_ALL}
 '''
+
+default_config = '{"dep":"true", "ver":"0.4-beta"}'
 
 help = f'''
   Available commands:
@@ -54,7 +57,7 @@ def run(c):
 
 def err(e, c):
   if verbose and c:
-    print(f'\n  {Fore.RED}[V]{Style.RESET_ALL} {c}')
+    print(f'\n  {Fore.RED}[ V ]{Style.RESET_ALL} {c}')
     print(f'  {Fore.RED}[ERR]{Style.RESET_ALL} {e}\n')
   else:
     print(f'\n  {Fore.RED}[ERR]{Style.RESET_ALL} {e}\n')
@@ -176,7 +179,35 @@ def Tools():
     if len(ip) > 0:
       run(f'env ANDROID_SERIAL={ip} scrcpy &')
 
-  sh.loadmenu(Menu('tools', [Option('View & Control target', Control)]))
+  def adbshell():
+    ip = ask('IP Address?')
+    if len(ip) > 0:
+      run(f'adb connect {ip}')
+
+  sh.loadmenu(Menu('tools', [Option('View & Control target', Control), Option('Acess ADB shell', adbshell)]))
+
+print('\n {}*{} Checking for config file.'.format(Fore.RED, Style.RESET_ALL))
+
+try:
+  config = json.load(open('config.json', 'r'))
+except FileNotFoundError:
+  print(' {}|{}\n {}| Not found.{}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL))
+  try:
+    config = open('config.json', 'w')
+  except:
+    err('Failed to create config file. (config.json)', False)
+    exit('Goodbye!')
+  else:
+    config.write(default_config)
+    print(' {}|{} Generated.{}\n {}|{}'.format(Fore.RED, Fore.GREEN, Style.RESET_ALL, Fore.RED, Style.RESET_ALL))
+
+except json.decoder.JSONDecodeError:
+  err('The decoding of the config file failed. (Try deleting config.json)', 'json.decoder.JSONDecodeError')
+  exit()
+else:
+  print(' {}|{} Exists.'.format(Fore.RED, Style.RESET_ALL))
+
+config.close()
 
 print(' {}* {}Dependency check.'.format(Fore.RED, Style.RESET_ALL))
 print(' {}|'.format(Fore.RED))
@@ -205,6 +236,5 @@ if not len(fail) == 0:
 sleep(1)
 
 sh = Shell(Menu('menu', [Option('Handle targets', HandleTargets), Option('Tools', Tools)]))
-
 while True:
   sh.query()
