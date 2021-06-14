@@ -181,24 +181,29 @@ def Tools():
 
   sh.loadmenu(Menu('tools', [Option('View & Control target', Control)]))
 
-print(' {}| {}Dependency check.'.format(Fore.RED, Style.RESET_ALL))
+print(' {}* {}Dependency check.'.format(Fore.RED, Style.RESET_ALL))
 print(' {}|'.format(Fore.RED))
 
-#' | dep [{}status]'
+fail = []
 
 for dep in dependencies:
   try:
     subprocess.call(['{}'.format(dep)], stdout=open(devnull, 'w'), stderr=subprocess.STDOUT)
     sleep(0.1)
   except:
-    print(' | {}'.format(dep).ljust(len(max(dependencies)), ' '), '\t\t', '{}[{}ERROR{}]{}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL).rjust(5, ' '))
+    print(' {}|{} {:<10s} {:>4s}'.format(Fore.RED, Style.RESET_ALL, dep, '{}[{}FAIL{}]'.format(Style.RESET_ALL, Fore.RED, Style.RESET_ALL)))
+    fail.append(dep)
   else:
-    print('{} | {}'.format(Fore.RED, dep).ljust(len(max(dependencies)), ' '),'\t\t', '{}[{} OK {}]{}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL).rjust(5, ' '))
+    print(' {}|{} {:<10s} {:>4s}'.format(Fore.RED, Style.RESET_ALL, dep, '{}[{} OK {}]'.format(Style.RESET_ALL, Fore.GREEN, Style.RESET_ALL)))
 print(' {}|'.format(Fore.RED))
-print(' {}| {}Done.'.format(Fore.RED, Style.RESET_ALL))
+
+if len(fail) == 0:
+  print(' {}* {}Done.'.format(Fore.RED, Style.RESET_ALL))
+else:
+  err('Dependencies not met.', 'Please install: {}'.format(str(fail)))
+  exit()
 
 sleep(1)
-sys.exit()
 
 sh = Shell(Menu('menu', [Option('Handle targets', HandleTargets), Option('Tools', Tools)]))
 
