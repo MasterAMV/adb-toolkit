@@ -201,7 +201,9 @@ if len(fail) == 0:
   print(' {}* {}Done.'.format(Fore.RED, Style.RESET_ALL))
 else:
   err('Dependencies not met.', 'Please install: {}'.format(str(fail)))
-  exit()
+  q = ask(' {}* {}Do you still wanna continue? (Y/n)'.format(Fore.RED, Style.RESET_ALL)).lower()
+  if not q == 'y':
+    exit()
 
 sleep(1)
 
