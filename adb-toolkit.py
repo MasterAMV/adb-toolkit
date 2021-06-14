@@ -1,11 +1,14 @@
+#!/usr/bin/python
+
 from colorama import Fore, Back, Style
-from os import system, name, environ, popen
+from os import system, name, environ, devnull
 from time import sleep
 import readline, sys, getopt, subprocess
 
-version = f'0.2-{Fore.RED}beta{Style.RESET_ALL}'
+version = f"0.3-{Fore.RED}beta{Style.RESET_ALL}"
+dependencies = ['shodan', 'adb']
 verbose = False
-banner = f'''{Fore.RED}
+banner = rf'''{Fore.RED}
            _ _           _              _ _    _ _  
   __ _  __| | |__       | |_ ___   ___ | | | _(_) |_ 
  / _` |/ _` | '_ \ _____| __/ _ \ / _ \| | |/ / | __|
@@ -58,8 +61,12 @@ def err(e, c):
 
 class Shell:
   def __init__(self, menu):
+
     self.menu = menu
     self.path = self.menu.name
+
+
+
     self.init()
   def query(self):
     RX = input(f'  {Fore.RED}({Style.RESET_ALL}{self.path}{Fore.RED}){Style.RESET_ALL}:{Fore.RED}\n  > {Style.RESET_ALL}')
@@ -173,6 +180,25 @@ def Tools():
       run(f'env ANDROID_SERIAL={ip} scrcpy &')
 
   sh.loadmenu(Menu('tools', [Option('View & Control target', Control)]))
+
+print(' {}| {}Dependency check.'.format(Fore.RED, Style.RESET_ALL))
+print(' {}|'.format(Fore.RED))
+
+#' | dep [{}status]'
+
+for dep in dependencies:
+  try:
+    subprocess.call(['{}'.format(dep)], stdout=open(devnull, 'w'), stderr=subprocess.STDOUT)
+    sleep(0.1)
+  except:
+    print(' | {}'.format(dep).ljust(len(max(dependencies)), ' '), '\t\t', '{}[{}ERROR{}]{}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL).rjust(5, ' '))
+  else:
+    print('{} | {}'.format(Fore.RED, dep).ljust(len(max(dependencies)), ' '),'\t\t', '{}[{} OK {}]{}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL).rjust(5, ' '))
+print(' {}|'.format(Fore.RED))
+print(' {}| {}Done.'.format(Fore.RED, Style.RESET_ALL))
+
+sleep(1)
+sys.exit()
 
 sh = Shell(Menu('menu', [Option('Handle targets', HandleTargets), Option('Tools', Tools)]))
 
