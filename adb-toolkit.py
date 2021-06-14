@@ -180,9 +180,7 @@ def Tools():
       run(f'env ANDROID_SERIAL={ip} scrcpy &')
 
   def adbshell():
-    ip = ask('IP Address?')
-    if len(ip) > 0:
-      run(f'adb connect {ip}')
+    run(f'adb shell')
 
   sh.loadmenu(Menu('tools', [Option('View & Control target', Control), Option('Acess ADB shell', adbshell)]))
 
