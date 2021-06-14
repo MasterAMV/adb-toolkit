@@ -205,9 +205,8 @@ except json.decoder.JSONDecodeError:
   err('The decoding of the config file failed. (Try deleting config.json)', 'json.decoder.JSONDecodeError')
   exit()
 else:
-  print(' {}|{} Exists.'.format(Fore.RED, Style.RESET_ALL))
-
-config.close()
+  print(' {}|\n |{} Exists.'.format(Fore.RED, Style.RESET_ALL))
+  print(' {}|{}'.format(Fore.RED, Style.RESET_ALL))
 
 print(' {}* {}Dependency check.'.format(Fore.RED, Style.RESET_ALL))
 print(' {}|'.format(Fore.RED))

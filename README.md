@@ -13,5 +13,9 @@ Dependencies
     - adb
     - shodan
 
+Python dependencies
+
+    - colorama
+
 This README is subject to change.
 Latest version is 0.4-beta
