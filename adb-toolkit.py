@@ -45,7 +45,7 @@ else:
   slash = '/'
 
 def ask(q):
-  return input(f'  {q}\n  {Fore.RED}>{Style.RESET_ALL} ')
+  return input(f' {q}\n {Fore.RED}>{Style.RESET_ALL} ')
 
 def run(c):
   if verbose:
@@ -64,9 +64,6 @@ class Shell:
 
     self.menu = menu
     self.path = self.menu.name
-
-
-
     self.init()
   def query(self):
     RX = input(f'  {Fore.RED}({Style.RESET_ALL}{self.path}{Fore.RED}){Style.RESET_ALL}:{Fore.RED}\n  > {Style.RESET_ALL}')
@@ -195,13 +192,13 @@ for dep in dependencies:
     fail.append(dep)
   else:
     print(' {}|{} {:<10s} {:>4s}'.format(Fore.RED, Style.RESET_ALL, dep, '{}[{} OK {}]'.format(Style.RESET_ALL, Fore.GREEN, Style.RESET_ALL)))
-print(' {}|'.format(Fore.RED))
 
-if len(fail) == 0:
-  print(' {}* {}Done.'.format(Fore.RED, Style.RESET_ALL))
-else:
+print(' {}|'.format(Fore.RED))
+print(' {}* {}Done.'.format(Fore.RED, Style.RESET_ALL))
+
+if not len(fail) == 0:
   err('Dependencies not met.', 'Please install: {}'.format(str(fail)))
-  q = ask(' {}* {}Do you still wanna continue? (Y/n)'.format(Fore.RED, Style.RESET_ALL)).lower()
+  q = ask('{}*{} Do you still wanna continue? {}(Y/n){}'.format(Fore.RED, Style.RESET_ALL, Fore.RED, Style.RESET_ALL)).lower()
   if not q == 'y':
     exit()
 
